@@ -1,0 +1,30 @@
+@import '../../../node_modules/bootstrap-css-only/css/bootstrap.css';
+@import '../../../node_modules/@fortawesome/fontawesome-free/css/all.css';
+div.head {
+    width: 100%;
+}
+
+div.frame {
+    max-width: 300px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+div.body {
+    overflow-y: scroll;
+}
+
+table {
+    border-collapse:collapse;
+}
+
+.body .table td {
+    cursor : pointer;
+}
+
+.head tr {
+    cursor: pointer;
+}
+
+td {
+    text-align: center;
+}

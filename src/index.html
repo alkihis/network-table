@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+  <title>Network table development</title>
+ <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/> --->
+ <script src="/build/network-table.js"></script>
+  <script>
+  window.onload = function () {
+
+    document.addEventListener("tableCellSelectEvent", function(d){
+      console.log("clicked");
+      console.dir(d.detail);
+    });
+
+
+
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        let data = JSON.parse(this.response);
+        // Action to be performed when the document is read;
+        //console.dir(data.registry.queryOrTemplate);
+        let header = [['uniprotID', 'geneName']];
+        let _obj = data.registry.queryOrTemplate;
+        let content = Object.keys(_obj).map((k)=> [_obj[k].id, _obj[k].geneName]);
+
+        let nT = document.querySelector("network-table");
+  //nT.data = { "headings" : ["ID", "geneName"], "data" : [ ["AAAAA","3"],["UUUUUU","7"]] };
+        nT.data = header.concat(content);
+      }
+    }
+    xhttp.open("GET", "assets/interactome_60_enriched.json", true);
+    xhttp.send();
+  };
+  </script>
+
+</head>
+<body>
+  <network-table height="400px"></network-table>
+</body>
+</html>

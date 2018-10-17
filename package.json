@@ -1,0 +1,35 @@
+{
+  "name": "network-table",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/types/components.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
+  "module" : "dist/esm/es5/index.js",
+  "scripts": {   
+    "build": "stencil build",
+    "start": "stencil build --dev --watch --serve",
+    "test": "stencil test --spec --e2e",
+    "test.watch": "stencil test --spec --e2e --watchAll"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/glaunay/network-table.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/glaunay/network-table/issues"
+  },
+  "homepage": "https://github.com/glaunay/network-table#readme",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.4.1",
+    "@stencil/core": "^0.14.0",
+    "bootstrap-css-only": "^4.1.1"
+  },
+  "devDependencies": {
+    "@stencil/utils": "0.0.5",
+    "serve": "^10.0.2"
+  }
+}
