@@ -26,6 +26,7 @@
         let _obj = data.registry.queryOrTemplate;
         let content = Object.keys(_obj).map((k)=> [_obj[k].id, _obj[k].geneName]);
 
+        console.dir(header.concat(content));
         let nT = document.querySelector("network-table");
   //nT.data = { "headings" : ["ID", "geneName"], "data" : [ ["AAAAA","3"],["UUUUUU","7"]] };
         nT.data = header.concat(content);

@@ -23,20 +23,28 @@ export class networkTable {
   }
 */
   checkInput() {
-    if(! this.data)
+    if(! this.data) {
+      console.warn("data is not defined");
+      console.dir(this.data);
       return false;
-    if (! (this.data.constructor === Array))
+    }
+    if (! (this.data.constructor === Array)) {
+      console.warn("data is not an array");
+      console.dir(this.data);
       return false;
-    
-      return true;
+    }
+    return true;
   }
+
   render() {
     if(!this.checkInput())
       return <div/>;
 
     let rows = [];
-    let head = this.data.shift().map((e)=><td>{e} <i class="fas fa-arrow-up"></i></td>);
-    this.data.forEach((row) => {
+    let head = this.data[0].map((e)=><td>{e} <i class="fas fa-arrow-up"></i></td>);
+    this.data.forEach((row, i) => {
+      if (i == 0)
+        return;
       let cells = row.map((e)=> <td>{e}</td>)
       rows.push(<tr>{cells}</tr>);
     });
