@@ -77,10 +77,17 @@ export class networkTable {
   }
 
   sortTable(index, up){
+    console.log("Sorting");
+    let re = /^([0-9]*[.])?[0-9]+$/;
     let rows = this.element.shadowRoot.querySelectorAll('.body table tr');
     var sortedRows = Array.from(rows).sort((a, b)=> {
       let x = a.querySelectorAll('td')[index].innerHTML.toLocaleLowerCase();
       let y = b.querySelectorAll('td')[index].innerHTML.toLocaleLowerCase();
+      //console.log(x + ',' + y) ;
+      if(re.test(x) && re.test(y)){
+        //console.log("Numbers");
+        return up ? parseFloat(x) - parseFloat(y): parseFloat(y) - parseFloat(x);
+      }
       return up ? x.localeCompare(y) : y.localeCompare(x);
       });
     for (let nRow of sortedRows) {

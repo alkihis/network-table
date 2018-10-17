@@ -7,6 +7,11 @@
  <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/> --->
  <script src="/build/network-table.js"></script>
   <script>
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+  }
   window.onload = function () {
 
     document.addEventListener("tableCellSelectEvent", function(d){
@@ -22,9 +27,9 @@
         let data = JSON.parse(this.response);
         // Action to be performed when the document is read;
         //console.dir(data.registry.queryOrTemplate);
-        let header = [['uniprotID', 'geneName']];
+        let header = [['uniprotID', 'geneName', "degree"]];
         let _obj = data.registry.queryOrTemplate;
-        let content = Object.keys(_obj).map((k)=> [_obj[k].id, _obj[k].geneName]);
+        let content = Object.keys(_obj).map((k)=> [_obj[k].id, _obj[k].geneName, getRandomInt(1, 100)]);
 
         console.dir(header.concat(content));
         let nT = document.querySelector("network-table");
