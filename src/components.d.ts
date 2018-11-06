@@ -15,10 +15,12 @@ export namespace Components {
   interface NetworkTable {
     'data'?: any;
     'height'?: string;
+    'hood'?: any;
   }
   interface NetworkTableAttributes extends StencilHTMLAttributes {
     'data'?: any;
     'height'?: string;
+    'hood'?: any;
     'onTableCellSelectEvent'?: (event: CustomEvent) => void;
   }
 }

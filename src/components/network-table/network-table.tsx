@@ -1,4 +1,10 @@
-import { Component, Prop, Element, Event, EventEmitter } from '@stencil/core';
+import { Component, Prop, Element, Event, EventEmitter, Watch } from '@stencil/core';
+
+
+interface colMask {
+  header: string;
+  values: string[];
+}
 
 //import { DataTable } from "simple-datatables";
 
@@ -9,12 +15,34 @@ import { Component, Prop, Element, Event, EventEmitter } from '@stencil/core';
 })
 export class networkTable {
   @Prop() data?:any;
+  @Prop() hood?:any;
   @Prop() height?:string='400px';
   @Event() tableCellSelectEvent: EventEmitter;
   @Element() private element: HTMLElement;
 
   tableDiv;HTMLElement;
+  
+  // Hiding some Rows, that match hood Prop content
+  // One column can be considered
+  @Watch('hood')
+  shadowRows(newShadow: colMask/*, oldData: undefined|object*/){
+    console.log("HEY");
+    let currentHeaders = this.data[0];
+    let tBody = this.element.shadowRoot.querySelector('.body');
+    // Get corresponding Header position
+    let index = currentHeaders.indexOf(newShadow.header);
 
+    Array.from(tBody.querySelectorAll('tr'))
+    .filter((tr)=> {
+        tr.classList.remove("shadow"); 
+        let cVal = tr.querySelectorAll('td')[index].textContent;
+        return newShadow.values.includes(cVal);
+      })
+      .forEach((tr)=>{       
+        tr.classList.add('shadow')
+      });
+      
+  }
 //  @Watch('data')
   //buildTable(newData: object[]/*, oldData: undefined|object*/){
   /*  this.tableDiv = this.element.shadowRoot.querySelector('.table');
@@ -66,7 +94,9 @@ export class networkTable {
     let tBody = this.element.shadowRoot.querySelector('.body');
 
     let re = new RegExp(value);
-    Array.from(tBody.querySelectorAll('.body tr')).forEach((tr)=>{
+    Array.from(tBody.querySelectorAll('.body tr'))
+      .filter((tr) =>  !tr.classList.contains('shadow') ) // skip currently shadowed row
+      .forEach((tr)=>{
         let status = 'collapse';
         Array.from(tr.querySelectorAll('td')).forEach((td)=>{
           if (re.test(td.textContent)) 
@@ -76,8 +106,7 @@ export class networkTable {
       });
   }
 
-  sortTable(index, up){
-    console.log("Sorting");
+  sortTable(index, up){   
     let re = /^([0-9]*[.])?[0-9]+$/;
     let rows = this.element.shadowRoot.querySelectorAll('.body table tr');
     var sortedRows = Array.from(rows).sort((a, b)=> {

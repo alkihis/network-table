@@ -31,3 +31,7 @@ table {
 td {
     text-align: center;
 }
+
+tr.shadow{
+    visibility: collapse !important;
+}
