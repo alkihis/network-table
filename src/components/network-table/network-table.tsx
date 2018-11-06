@@ -25,18 +25,18 @@ export class networkTable {
   // Hiding some Rows, that match hood Prop content
   // One column can be considered
   @Watch('hood')
-  shadowRows(newShadow: colMask/*, oldData: undefined|object*/){
-    console.log("HEY");
+  shadowRows(newShadow?: colMask/*, oldData: undefined|object*/){
     let currentHeaders = this.data[0];
     let tBody = this.element.shadowRoot.querySelector('.body');
-    // Get corresponding Header position
-    let index = currentHeaders.indexOf(newShadow.header);
-
+    // Get corresponding Header position    
+    let index = newShadow  ? currentHeaders.indexOf(newShadow.header): 0;
+    // Set an empty selector values if prop changed to undefine
+    let values = newShadow ? newShadow.values : [];
     Array.from(tBody.querySelectorAll('tr'))
     .filter((tr)=> {
         tr.classList.remove("shadow"); 
         let cVal = tr.querySelectorAll('td')[index].textContent;
-        return newShadow.values.includes(cVal);
+        return values.includes(cVal);
       })
       .forEach((tr)=>{       
         tr.classList.add('shadow')
