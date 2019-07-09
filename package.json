@@ -1,11 +1,11 @@
 {
-  "name": "network-table",
+  "name": "@mmsb/network-table",
   "version": "1.0.4",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/types/components.d.ts",
   "collection": "dist/collection/collection-manifest.json",
-  "module": "dist/esm/es5/index.js",
+  "module": "dist/index.mjs",
   "scripts": {
     "build": "stencil build",
     "start": "stencil build --dev --watch --serve",
@@ -25,11 +25,11 @@
   "homepage": "https://github.com/glaunay/network-table#readme",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.4.1",
-    "@stencil/core": "^0.14.0",
+    "@stencil/core": "^1.1.5",
     "bootstrap-css-only": "^4.1.1"
   },
   "devDependencies": {
     "@stencil/utils": "0.0.5",
-    "serve": "^10.0.2"
+    "serve": "^11.0.2"
   }
 }

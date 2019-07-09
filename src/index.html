@@ -4,8 +4,21 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
   <title>Network table development</title>
- <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/> --->
- <script src="/build/network-table.js"></script>
+  
+  <script type="module" src="/build/network-table.esm.js"></script>
+  <script nomodule src="/build/network-table.js"></script>
+
+  <style>
+    @font-face {
+      font-family: 'Material Icons';
+      font-style: normal;
+      font-weight: 400;
+      src: local('Material Icons'),
+          local('MaterialIcons-Regular'),
+          url(https://fonts.gstatic.com/s/materialicons/v47/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2) format('woff2');
+    }
+  </style>
+
   <script>
   function getRandomInt(min, max) {
     min = Math.ceil(min);
@@ -18,8 +31,6 @@
       console.log("clicked");
       console.dir(d.detail);
     });
-
-
 
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {

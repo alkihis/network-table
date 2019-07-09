@@ -5,34 +5,19 @@
  */
 
 
-import '@stencil/core';
-
-
+import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 
 
 export namespace Components {
-
   interface NetworkTable {
-    'data'?: any;
+    'data'?: [string, string, string | number][];
+    'filter': (predicate: (line: string[]) => boolean) => Promise<string[][]>;
     'height'?: string;
     'hood'?: any;
-  }
-  interface NetworkTableAttributes extends StencilHTMLAttributes {
-    'data'?: any;
-    'height'?: string;
-    'hood'?: any;
-    'onTableCellSelectEvent'?: (event: CustomEvent) => void;
   }
 }
 
 declare global {
-  interface StencilElementInterfaces {
-    'NetworkTable': Components.NetworkTable;
-  }
-
-  interface StencilIntrinsicElements {
-    'network-table': Components.NetworkTableAttributes;
-  }
 
 
   interface HTMLNetworkTableElement extends Components.NetworkTable, HTMLStencilElement {}
@@ -40,22 +25,31 @@ declare global {
     prototype: HTMLNetworkTableElement;
     new (): HTMLNetworkTableElement;
   };
-
   interface HTMLElementTagNameMap {
-    'network-table': HTMLNetworkTableElement
-  }
-
-  interface ElementTagNameMap {
     'network-table': HTMLNetworkTableElement;
   }
-
-
-  export namespace JSX {
-    export interface Element {}
-    export interface IntrinsicElements extends StencilIntrinsicElements {
-      [tagName: string]: any;
-    }
-  }
-  export interface HTMLAttributes extends StencilHTMLAttributes {}
-
 }
+
+declare namespace LocalJSX {
+  interface NetworkTable extends JSXBase.HTMLAttributes<HTMLNetworkTableElement> {
+    'data'?: [string, string, string | number][];
+    'height'?: string;
+    'hood'?: any;
+    'onNetwork-table.select'?: (event: CustomEvent<string[]>) => void;
+  }
+
+  interface IntrinsicElements {
+    'network-table': NetworkTable;
+  }
+}
+
+export { LocalJSX as JSX };
+
+
+declare module "@stencil/core" {
+  export namespace JSX {
+    interface IntrinsicElements extends LocalJSX.IntrinsicElements {}
+  }
+}
+
+
