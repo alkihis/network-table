@@ -32,6 +32,10 @@ td {
     text-align: center;
 }
 
+tr[cell-selected] {
+    background: rgba(255, 171, 16, 0.767);
+}
+
 tr.shadow{
     visibility: collapse !important;
 }
