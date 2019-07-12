@@ -35,6 +35,8 @@ declare namespace LocalJSX {
     'data'?: [string, string, string | number][];
     'height'?: string;
     'hood'?: any;
+    'onNetwork-table.hover-off'?: (event: CustomEvent<void>) => void;
+    'onNetwork-table.hover-on'?: (event: CustomEvent<string[]>) => void;
     'onNetwork-table.select'?: (event: CustomEvent<string[]>) => void;
   }
 
