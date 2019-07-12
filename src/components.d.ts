@@ -38,6 +38,8 @@ declare namespace LocalJSX {
     'onNetwork-table.hover-off'?: (event: CustomEvent<void>) => void;
     'onNetwork-table.hover-on'?: (event: CustomEvent<string[]>) => void;
     'onNetwork-table.select'?: (event: CustomEvent<string[]>) => void;
+    'onNetwork-table.unselect'?: (event: CustomEvent<string[]>) => void;
+    'onNetwork-table.unselect-all'?: (event: CustomEvent<void>) => void;
   }
 
   interface IntrinsicElements {
