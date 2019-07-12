@@ -19,6 +19,14 @@ export class NetworkTable {
     eventName: 'network-table.select'
   }) tableCellSelectEvent: EventEmitter<string[]>;
 
+  @Event({
+    eventName: 'network-table.hover-on'
+  }) hoverOnEvent: EventEmitter<string[]>;
+
+  @Event({
+    eventName: 'network-table.hover-off'
+  }) hoverOffEvent: EventEmitter<void>;
+
   @Element() protected element: HTMLElement;
 
   // Hiding some Rows, that match hood Prop content
@@ -181,6 +189,12 @@ export class NetworkTable {
       e.addEventListener('click', function () {
         self.tableCellSelectEvent.emit(Array.from(e.querySelectorAll('td')).map((td) => td.innerHTML));
       });
+      e.addEventListener('mouseover', () => {
+        this.hoverOnEvent.emit(Array.from(e.querySelectorAll('td')).map((td) => td.innerHTML));
+      })
+      e.addEventListener('mouseout', () => {
+        this.hoverOffEvent.emit();
+      })
     });
   }
 }
