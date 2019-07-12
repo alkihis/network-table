@@ -20,6 +20,14 @@ export class NetworkTable {
   }) tableCellSelectEvent: EventEmitter<string[]>;
 
   @Event({
+    eventName: 'network-table.unselect'
+  }) tableCellUnSelectEvent: EventEmitter<string[]>;
+
+  @Event({
+    eventName: 'network-table.unselect-all'
+  }) tableCellUnSelectAllEvent: EventEmitter<void>;
+
+  @Event({
     eventName: 'network-table.hover-on'
   }) hoverOnEvent: EventEmitter<string[]>;
 
@@ -66,6 +74,8 @@ export class NetworkTable {
   }
 
   render() {
+    this.tableCellUnSelectAllEvent.emit();
+
     if (!this.checkInput())
       return <div />;
 
@@ -187,7 +197,14 @@ export class NetworkTable {
     let cells = Array.from(this.element.shadowRoot.querySelectorAll('.body tr'));
     cells.forEach((e) => {
       e.addEventListener('click', function () {
-        self.tableCellSelectEvent.emit(Array.from(e.querySelectorAll('td')).map((td) => td.innerHTML));
+        if (e.hasAttribute('cell-selected')) {
+          e.removeAttribute('cell-selected');
+          self.tableCellUnSelectEvent.emit(Array.from(e.querySelectorAll('td')).map((td) => td.innerHTML));
+        }
+        else {
+          e.setAttribute('cell-selected', '');
+          self.tableCellSelectEvent.emit(Array.from(e.querySelectorAll('td')).map((td) => td.innerHTML));
+        }
       });
       e.addEventListener('mouseover', () => {
         this.hoverOnEvent.emit(Array.from(e.querySelectorAll('td')).map((td) => td.innerHTML));
