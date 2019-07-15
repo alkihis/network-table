@@ -1,4 +1,4 @@
-import { Component, Prop, Element, Event, EventEmitter, Watch, h, Method } from '@stencil/core';
+import { Component, Prop, Element, Event, EventEmitter, Watch, h, Method, Listen } from '@stencil/core';
 
 interface ColMask {
   header: string;
@@ -11,6 +11,20 @@ interface ColMask {
   shadow: true
 })
 export class NetworkTable {
+  public readonly click_function = (e: Event) => {
+    const element = e.currentTarget as HTMLElement;
+
+    if (element.hasAttribute('cell-selected')) {
+      element.removeAttribute('cell-selected');
+      this.tableCellUnSelectEvent.emit(Array.from(element.querySelectorAll('td')).map((td) => td.innerHTML));
+    }
+    else {
+      element.setAttribute('cell-selected', '');
+      this.tableCellSelectEvent.emit(Array.from(element.querySelectorAll('td')).map((td) => td.innerHTML));
+    }
+  };
+
+
   @Prop() data?: [string, string, string | number][];
   @Prop() hood?: any;
   @Prop() height?: string = '400px';
@@ -74,7 +88,7 @@ export class NetworkTable {
   }
 
   render() {
-    this.tableCellUnSelectAllEvent.emit();
+    this.unselectAll();
 
     if (!this.checkInput())
       return <div />;
@@ -171,6 +185,13 @@ export class NetworkTable {
     }
   }
 
+  @Listen('omega-graph.rebuild', { target: 'window' })
+  @Method()
+  async unselectAll() {
+    this.tableCellUnSelectAllEvent.emit();
+    this.element.shadowRoot.querySelectorAll('.body tr[cell-selected]').forEach(e => e.removeAttribute('cell-selected'));
+  }
+
   componentDidUpdate() {
     let tBody = this.element.shadowRoot.querySelector('.body');//.style.height=this.height;
     tBody.setAttribute('style', "max-height:" + this.height);
@@ -196,20 +217,8 @@ export class NetworkTable {
 
     let cells = Array.from(this.element.shadowRoot.querySelectorAll('.body tr'));
     cells.forEach((e) => {
-      e.addEventListener('click', function () {
-        
-
-        if (e.hasAttribute('cell-selected')) {
-          console.log("Click", "select");
-          e.removeAttribute('cell-selected');
-          self.tableCellUnSelectEvent.emit(Array.from(e.querySelectorAll('td')).map((td) => td.innerHTML));
-        }
-        else {
-          console.log("Click", "unselect");
-          e.setAttribute('cell-selected', '');
-          self.tableCellSelectEvent.emit(Array.from(e.querySelectorAll('td')).map((td) => td.innerHTML));
-        }
-      });
+      e.removeEventListener('click', this.click_function);
+      e.addEventListener('click', this.click_function);
       e.addEventListener('mouseover', () => {
         this.hoverOnEvent.emit(Array.from(e.querySelectorAll('td')).map((td) => td.innerHTML));
       })

@@ -14,6 +14,7 @@ export namespace Components {
     'filter': (predicate: (line: string[]) => boolean) => Promise<string[][]>;
     'height'?: string;
     'hood'?: any;
+    'unselectAll': () => Promise<void>;
   }
 }
 
