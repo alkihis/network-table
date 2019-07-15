@@ -75,13 +75,13 @@ export class NetworkTable {
 
   checkInput() {
     if (!this.data) {
-      console.warn("data is not defined");
-      console.dir(this.data);
+      // console.warn("data is not defined");
+      // console.dir(this.data);
       return false;
     }
     if (!Array.isArray(this.data)) {
-      console.warn("data is not an array");
-      console.dir(this.data);
+      // console.warn("data is not an array");
+      // console.dir(this.data);
       return false;
     }
     return true;
