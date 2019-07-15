@@ -197,13 +197,15 @@ export class NetworkTable {
     let cells = Array.from(this.element.shadowRoot.querySelectorAll('.body tr'));
     cells.forEach((e) => {
       e.addEventListener('click', function () {
-        console.log("Click");
+        
 
         if (e.hasAttribute('cell-selected')) {
+          console.log("Click", "select");
           e.removeAttribute('cell-selected');
           self.tableCellUnSelectEvent.emit(Array.from(e.querySelectorAll('td')).map((td) => td.innerHTML));
         }
         else {
+          console.log("Click", "unselect");
           e.setAttribute('cell-selected', '');
           self.tableCellSelectEvent.emit(Array.from(e.querySelectorAll('td')).map((td) => td.innerHTML));
         }
