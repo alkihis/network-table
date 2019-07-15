@@ -20,6 +20,9 @@
   </style>
 
   <script>
+    window.addEventListener('network-table.unselect', function(e) { console.log(e) });
+    window.addEventListener('network-table.select', function(e) { console.log(e) });
+
   function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
