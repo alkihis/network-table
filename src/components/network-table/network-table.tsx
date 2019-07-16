@@ -186,6 +186,7 @@ export class NetworkTable {
   }
 
   @Listen('omega-graph.rebuild', { target: 'window' })
+  @Listen('omega-prune.unselect-all', { target: 'window' })
   @Method()
   async unselectAll() {
     this.tableCellUnSelectAllEvent.emit();
