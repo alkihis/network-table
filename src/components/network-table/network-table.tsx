@@ -126,10 +126,10 @@ export class NetworkTable {
     );
   }
 
-  _filter(value) {
+  _filter(value: string) {
     let tBody = this.element.shadowRoot.querySelector('.body');
 
-    let re = new RegExp(value);
+    let re = new RegExp(value, 'i');
     Array.from(tBody.querySelectorAll('.body tr'))
       .filter((tr) => !tr.classList.contains('shadow')) // skip currently shadowed row
       .forEach((tr) => {
